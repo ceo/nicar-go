@@ -15,6 +15,13 @@ import (
 
 func main() {
 
+	if len(os.Args) < 2 {
+		fmt.Println("Debes ingresar un dominio")
+		fmt.Println("Uso: nicar <dominio>")
+
+		os.Exit(0)
+	}
+
 	domain := os.Args[1]
 
 	var wg sync.WaitGroup
@@ -80,4 +87,3 @@ func checkDomain(wg *sync.WaitGroup, domain string, s *spinner.Spinner) {
 
 	return
 }
-
