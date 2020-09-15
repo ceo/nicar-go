@@ -18,12 +18,16 @@ func main() {
 	if len(os.Args) < 2 {
 		fmt.Println("Debes ingresar un dominio")
 		fmt.Println("Uso: nicar <dominio>")
-
 		os.Exit(0)
 	}
 
 	domain := os.Args[1]
 
+	if !strings.Contains(domain, ".") {
+		fmt.Println(domain + " no es dominio valido")
+		fmt.Println("Uso: nicar <dominio>")
+		os.Exit(0)
+	}
 	var wg sync.WaitGroup
 
 	wg.Add(1)
