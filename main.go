@@ -9,8 +9,6 @@ import (
 	"os"
 	"strings"
 	"sync"
-
-	"github.com/janeczku/go-spinner"
 )
 
 func main() {
@@ -28,18 +26,21 @@ func main() {
 		fmt.Println("Uso: nicar <dominio>")
 		os.Exit(0)
 	}
+
 	var wg sync.WaitGroup
 
 	wg.Add(1)
 
-	s := spinner.StartNew("Chequeando dominio: " + domain)
+	// s := spinner.StartNew("Chequeando dominio: " + domain)
 
-	go checkDomain(&wg, domain, s)
+	fmt.Println("Chequeando dominio: " + domain)
+
+	go checkDomain(&wg, domain)
 
 	wg.Wait()
 }
 
-func checkDomain(wg *sync.WaitGroup, domain string, s *spinner.Spinner) {
+func checkDomain(wg *sync.WaitGroup, domain string) {
 	defer wg.Done()
 
 	domainParts := strings.Split(domain, ".")
@@ -62,8 +63,6 @@ func checkDomain(wg *sync.WaitGroup, domain string, s *spinner.Spinner) {
 
 	fmt.Println()
 	if resp.StatusCode == http.StatusOK {
-
-		s.Stop()
 
 		bodyBytes, err := ioutil.ReadAll(resp.Body)
 		if err != nil {
